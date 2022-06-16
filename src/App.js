@@ -24,6 +24,37 @@ function App() {
 
   useEffect(() => handleFilterSeedPackets(filterQuery), [allSeedPackets, filterQuery]);
 
+  function submitSeedPacket(e) {
+    e.preventDefault();
+
+    const newSeedPacket = {
+      name: seedFormPlantName,
+      variety: seedFormVariety,
+      year: seedFormYearHarvested,
+      gardener: seedFormGardener,
+      color: seedFormPacketColor,
+    };
+    setAllSeedPackets([...allSeedPackets, newSeedPacket]);
+
+    setSeedFormPlantName('');
+    setSeedFormVariety('');
+    setSeedFormYearHarvested('');
+    setSeedFormGardener('');
+    setSeedFormPacketColor('lightbrown');
+  }
+
+  function handleDeleteSeedPacket(name) {
+    const seedPacketIndex = allSeedPackets.findIndex(seedpacket) => seedpacket.name === name);
+    allSeedPackets.splice(seedPacketIndex, 1);
+    setAllSeedPackets([...allSeedPackets]);
+  }
+  function handleFilterSeedPacket(search)
+  const searchSeedPackets = allSeedPackets.filter((movie) => movie.name.includes(search));
+
+
+  search ? setAllFilteredSeedPackets(searchSeedPackets) : setAllFilteredSeedPackets(allSeedPackets);
+}
+
 
 
   return (
