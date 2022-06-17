@@ -4,25 +4,28 @@
 //define a handleFilterSeedPacket function that takes in a string and set filterSeedPackets to an array of seed packets whose name matches that string
 
 import './App.css';
-import { useSate, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import SeedPacketForm from './SeedPacketForm';
 import SeedPacketList from './SeedPacketList';
 import SeedPacket from './SeedPacket';
-import { useState } from 'react/cjs/react.production.min';
+
 
 
 
 function App() {
-  const [allSeedPackets, setAllSeedPackets] = useSate([]);
-  const [filteredSeedPackets, setAllFilteredSeedPackets] = useSate([]);
-  const [seedFormPlantName, setSeedFormPlantName] = useSate([]);
-  const [seedFormVariety, setSeedFormVariety] = useSate([]);
-  const [seedFormYearHarvested, setSeedFormYearHarvested] = useSate('');
-  const [seedFormGardener, setSeedFormGardener] = useSate('');
-  const [seedFormPacketColor, setSeedFormPacketColor] = useState('lightbrown');
-  const [filterQuery, setFilterQuery] = useSate('');
+  const [allSeedPackets, setAllSeedPackets] = useState([]);
+  const [filteredSeedPackets, setAllFilteredSeedPackets] = useState([]);
+  const [seedFormPlantName, setSeedFormPlantName] = useState([]);
+  const [seedFormVariety, setSeedFormVariety] = useState([]);
+  const [seedFormYearHarvested, setSeedFormYearHarvested] = useState('');
+  const [seedFormGardener, setSeedFormGardener] = useState('');
+  const [seedFormPacketColor, setSeedFormPacketColor] = useState('brown');
+  // const [filterQuery, setFilterQuery] = useState('');
 
-  useEffect(() => handleFilterSeedPackets(filterQuery), [allSeedPackets, filterQuery]);
+  useEffect(() => { 
+    setAllFilteredSeedPackets(allSeedPackets); 
+    
+  }, [allSeedPackets]);
 
   function submitSeedPacket(e) {
     e.preventDefault();
@@ -40,58 +43,60 @@ function App() {
     setSeedFormVariety('');
     setSeedFormYearHarvested('');
     setSeedFormGardener('');
-    setSeedFormPacketColor('lightbrown');
+    setSeedFormPacketColor('brown');
   }
 
-  function handleDeleteSeedPacket(name) {
-    const seedPacketIndex = allSeedPackets.findIndex(seedpacket) => seedpacket.name === name);
+  function handleDeleteSeedPacket(name) {   
+   
+    const seedPacketIndex = allSeedPackets.findIndex((seedpacket) => seedpacket.name === name);
+   
     allSeedPackets.splice(seedPacketIndex, 1);
-    setAllSeedPackets([...allSeedPackets]);
+    setAllFilteredSeedPackets([...allSeedPackets]);
   }
-  function handleFilterSeedPacket(search) {
-  const searchSeedPackets = allSeedPackets.filter((movie) => movie.name.includes(search));
+  function handleFilterSeedPackets(search) {
+    const searchSeedPackets = allSeedPackets.filter((seedpacket) => seedpacket.name.includes(search));
 
 
-  search ? setAllFilteredSeedPackets(searchSeedPackets) : setAllFilteredSeedPackets(allSeedPackets);
-}
+    setAllFilteredSeedPackets(searchSeedPackets);
+  }
 
   return (
     <div className="App">
-  <div className="current-seedpacket quarter">
-      <SeedPacket
-      seedpacket={{
-        name: seedFormPlantName,
-        variety: seedFormVariety,
-      year: seedFormYearHarvested,
-      gardener: seedFormGardener,
-      color: seedFormPacketColor,
-      }}
-      />
+      <div className="current-seedpacket quarter">
+        <SeedPacket
+          seedpacket={{
+            name: seedFormPlantName,
+            variety: seedFormVariety,
+            year: seedFormYearHarvested,
+            gardener: seedFormGardener,
+            color: seedFormPacketColor,
+          }}
+        />
       
-    </div>
-    <div className="seedpacket-filter quarter">
+      </div>
+      <div className="seedpacket-filter quarter">
       Filter SeedPacket
-      <input onChange={(e) => setFilterQuery(e.target.value)} />
-    </div>
-    <SeedPacketForm 
-    submitSeedPacket={submitSeedPacket}
-    seedFormPlantName={seedFormPlantName}
-    setSeedFormPlantName={setSeedFormPlantName}
-    seedFormVariety={SeedFormVariety}
-    setSeedFormVariety={setSeedFormVariety}
-    seedFormYearHarvested={seedFormYearHarvested}
-    setSeedFormYearHarvested={setSeedFormYearHarvested}
-    seedFormGardener={seedFormGardener}
-    setSeedFormGardener={setSeedFormGardener}
-    seedFormPacketColor={seedFormPacketColor}
-    setSeedFormPacketColor={setSeedFormPacketColor}
-    />
-    <SeedPacketList
-    seedpacket={filterQuery ? filteredSeedPackets : allSeedPackets}
-    handleDeleteSeedPacket={handleDeleteSeedPacket}
-    />
+        <input onChange={(e) => handleFilterSeedPackets(e.target.value)} />
+      </div>
+      <SeedPacketForm 
+        submitSeedPacket={submitSeedPacket}
+        seedFormPlantName={seedFormPlantName}
+        setSeedFormPlantName={setSeedFormPlantName}
+        seedFormVariety={seedFormVariety}
+        setSeedFormVariety={setSeedFormVariety}
+        seedFormYearHarvested={seedFormYearHarvested}
+        setSeedFormYearHarvested={setSeedFormYearHarvested}
+        seedFormGardener={seedFormGardener}
+        setSeedFormGardener={setSeedFormGardener}
+        seedFormPacketColor={seedFormPacketColor}
+        setSeedFormPacketColor={setSeedFormPacketColor}
+      />
+      <SeedPacketList
+        seedpackets={filteredSeedPackets}
+        handleDeleteSeedPacket={handleDeleteSeedPacket}
+      />
     </div>
   );
-    }
+}
 
 export default App;

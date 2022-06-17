@@ -6,11 +6,11 @@ import SeedPacket from './SeedPacket';
 
 
 
-export default function SeedPacketList({ seedpacket, handleDeleteSeedPacket }) {
+export default function SeedPacketList({ seedpackets, handleDeleteSeedPacket }) {
   return (
     <div className="seedpacket-list quarter">
-      {seedpacket.map((seedpacket, i) => (
-        <SeedPacket key={seedpacket.name + i} seedpacket={seedpacket} handleDeleteSeedpacket={handleDeleteSeedPacket} />
+      {seedpackets.map((seedpacket, i) => (
+        <SeedPacket key={seedpacket.name + i} seedpacket={seedpacket} handleDeleteSeedPacket={handleDeleteSeedPacket} />
       ))}
     </div>
 

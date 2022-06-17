@@ -14,10 +14,11 @@ export default function SeedPacketForm({
   seedFormGardener,
   setSeedFormPacketColor,
   seedFormPacketColor,
+  submitSeedPacket,
 
 }) {
   return (
-    <div className="seepacket-form-container quarter">
+    <div className='seepacket-form-container quarter'>
       <form onSubmit={submitSeedPacket} className="seedpacket-form">
         <label>
                     Seed Name
@@ -58,7 +59,7 @@ export default function SeedPacketForm({
             onChange={(e) => setSeedFormPacketColor(e.target.value)}
             value={seedFormPacketColor}
           >
-            <option value="lightbrown">Lightbrown</option>
+            <option value="brown">Brown</option>
             <option value="red">Red</option>
             <option value="yellow">Yellow</option>
             <option value="orange">Orange</option>
